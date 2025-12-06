@@ -54,3 +54,13 @@
       return [];
     }
   };
+
+export const fetchTopMovers = async () => {
+  try {
+    const res = await axios.get(`${API_BASE}/top-movers`);
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching top movers:", err.message || err);
+    return { topGainers: [], topLosers: [], totalMarketCap: 0, totalVolume: 0 };
+  }
+};

@@ -8,7 +8,7 @@ import { searchSymbols } from '../api/stock-api';
 const Search = () => {
   const [input, setInput] = useState("");
   const [bestMatches, setBestMatches] = useState([]);
-  const [userSelectedStock, setUserSelectedStock] = useState(false); // NEW
+  const [userSelectedStock, setUserSelectedStock] = useState(false); 
   const { darkMode } = useContext(ThemeContext);
   const { setStockSymbol } = useContext(StockContext);
 
@@ -18,7 +18,7 @@ const Search = () => {
   const clear = () => {
     setInput("");
     setBestMatches([]);
-    setUserSelectedStock(false); // reset selection
+    setUserSelectedStock(false); 
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
@@ -45,7 +45,7 @@ const Search = () => {
       }));
 
       setBestMatches(cleanedResults);
-      setUserSelectedStock(false); // allow results to show again
+      setUserSelectedStock(false);
     } catch (error) {
       if (error.name === "CanceledError") return;
       console.error("Search error:", error.message || error);
@@ -57,8 +57,8 @@ const Search = () => {
     setInput(symbol);
     setBestMatches([]);
     setStockSymbol(symbol);
-    setUserSelectedStock(true); // hide results
-    if (timerRef.current) {
+    setUserSelectedStock(true); 
+      if (timerRef.current) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
@@ -71,11 +71,11 @@ const Search = () => {
   useEffect(() => {
     if (!input.trim()) {
       setBestMatches([]);
-      setUserSelectedStock(false); // reset when input cleared
+      setUserSelectedStock(false);
       return;
     }
 
-    // Only trigger search if user hasn't just selected a stock
+    
     if (!userSelectedStock) {
       timerRef.current = setTimeout(() => {
         updateBestMatches();
@@ -90,16 +90,16 @@ const Search = () => {
 
   return (
     <div className={`flex items-center my-4 border-2 rounded-md relative z-50 w-96 
-      ${darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-neutral-200"}`}>
+      ${darkMode ? "bg-gray-950 border-gray-800" : "bg-white border-neutral-200"}`}>
 
       <input
         type="text"
         value={input}
-        className={`w-full px-4 py-2 focus:outline-none rounded-md ${darkMode ? "bg-gray-900" : ""}`}
+        className={`w-full px-4 py-2 focus:outline-none rounded-md ${darkMode ? "bg-gray-950" : ""}`}
         placeholder="Search Stock..."
         onChange={(e) => {
           setInput(e.target.value);
-          setUserSelectedStock(false); // typing again shows results
+          setUserSelectedStock(false); 
         }}
         onKeyDown={(e) => e.key === "Enter" && updateBestMatches()}
       />

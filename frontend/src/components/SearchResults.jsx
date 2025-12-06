@@ -10,7 +10,7 @@ const SearchResults = ({ results = [], onSelect }) => {
 
   return (
     <ul className={`absolute top-12 border-2 w-full rounded-md h-64 overflow-y-scroll 
-      ${darkMode ? "bg-gray-900 border-gray-800 custom-scrollbar" : "bg-white border-neutral-200 custom-scrollbar"}`}>
+      ${darkMode ? "bg-gray-950 border-gray-800 custom-scrollbar" : "bg-white border-neutral-200 custom-scrollbar"}`}>
       
       {results.map((item , index) => (
         <li

@@ -9,7 +9,7 @@ const ChartFilter = ({ text, active, onClick }) => {
       className={`w-10 m-1 h-6 border rounded-md flex items-center justify-center cursor-pointer transition-colors duration-200
         ${active
           ? "bg-indigo-600 border-indigo-700 text-gray-100"
-          : darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-neutral-200 text-neutral-400"
+          : darkMode ? "bg-gray-950 border-gray-800" : "bg-white border-neutral-200 text-neutral-400"
         }
         `}
     >
