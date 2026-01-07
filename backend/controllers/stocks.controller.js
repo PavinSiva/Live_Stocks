@@ -3,6 +3,7 @@ import {
   fetchYahooStockDetails,
   fetchYahooQuote,
   fetchYahooCandles,
+  fetchMarketNews,
 } from "../services/providers/yahoo.provider.js";
 
 
@@ -57,5 +58,15 @@ export const getStockCandles = async (req, res) => {
   } catch (err) {
     console.error("Yahoo candles error:", err.message);
     res.status(500).json({ error: err.message || "Failed to fetch candles" });
+  }
+};
+
+export const getMarketNews = async (req, res) => {
+  try {
+    const news = await fetchMarketNews();
+    res.json(news);
+  } catch (err) {
+    console.error("Market news error:", err.message);
+    res.status(500).json({ error: "Failed to fetch market news" });
   }
 };

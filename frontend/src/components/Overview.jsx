@@ -13,9 +13,9 @@ const Overview = ({ name, symbol, price, change, percentChange, currency }) => {
 
   return (
     <Card>
-      <div className="absolute break-words flex flex-col top-1 text-neutral-400 text-xl xl:text-lg 2xl:text-md">
+      {/* <div className="absolute break-words flex flex-col top-1 text-neutral-400 text-xl xl:text-sm 2xl:text-md">
         {symbol}
-      </div>
+      </div> */}
       <div className="h-full w-full flex items-center justify-evenly">
         <span className="text-2xl xl:text-4xl 2xl:text-4xl flex items-center font-semibold">
           {currencySymbol(price, currency)}

@@ -40,10 +40,9 @@ const CompanyCard = ({ company }) => {
   return (
     <div
       className={`w-[250px] flex-shrink-0 p-1 rounded-md border-2 transition-colors duration-300 flex flex-col 
-        ${
-          darkMode
-            ? "bg-gray-950 text-gray-100  border-gray-900 "
-            : "bg-white text-gray-900 border-gray-300"
+        ${darkMode
+          ? "bg-black text-gray-100  border-gray-900 "
+          : "bg-white text-gray-900 border-gray-300"
         }`}
     >
       <div className="flex items-center justify-between mb-3">
@@ -57,7 +56,7 @@ const CompanyCard = ({ company }) => {
         </div>
         <div
           className={`flex-1 h-16 ml-3 rounded transition-colors duration-300
-            ${darkMode ? "bg-gray-800" : "bg-gray-200"}`}
+            ${darkMode ? "bg-black" : "bg-gray-200"}`}
         />
         <LineChart
           data={company.history?.map((h) => ({ x: h.time, y: h.close })) || []}
@@ -65,15 +64,14 @@ const CompanyCard = ({ company }) => {
         />
       </div>
 
-      
+
       <div className="flex items-center justify-between">
         <p className="text-lg font-medium">
           ${company.price?.toFixed(2) ?? "--"}
         </p>
         <p
-          className={`flex items-center text-sm font-semibold ${
-            isPositive ? "text-green-500" : "text-red-500"
-          }`}
+          className={`flex items-center text-sm font-semibold ${isPositive ? "text-green-500" : "text-red-500"
+            }`}
         >
           {isPositive ? "▲" : "▼"} {company.changePercent?.toFixed(2) ?? "--"}%
         </p>
@@ -82,7 +80,7 @@ const CompanyCard = ({ company }) => {
   );
 };
 
-const Header = ({ name }) => {
+const Header = ({ name, tradeMode, onToggleTrade }) => {
   const [topCompanies, setTopCompanies] = useState([]);
   const { darkMode } = useContext(ThemeContext);
 
@@ -109,7 +107,7 @@ const Header = ({ name }) => {
   return (
     <div
       className={`w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-6 px-4 py-4 transition-colors duration-300
-        ${darkMode ? "bg-gray-950" : "bg-white"}`}
+        ${darkMode ? "bg-black" : "bg-white"}`}
     >
 
       <div className="flex flex-col w-full md:w-[380px] flex-shrink-0">
@@ -122,7 +120,7 @@ const Header = ({ name }) => {
         <Search />
       </div>
 
-      
+
       <div className="flex-1 w-full flex items-center overflow-x-auto scrollbar-hide p-2">
         <div className="flex gap-4">
           {/* {topCompanies.map((company) => (
@@ -131,10 +129,23 @@ const Header = ({ name }) => {
         </div>
       </div>
 
-      
-      <div className="flex-shrink-0 ml-auto mt-2 md:mt-0">
+
+      <div className="flex items-center gap-4 ml-auto mt-2 md:mt-0">
+        <button
+          onClick={onToggleTrade}
+          className={`px-4 py-2 rounded-md font-semibold transition-colors
+      ${
+      tradeMode
+        ? "bg-gray-800 text-white shadow-inner"
+        : "bg-gray-950 text-gray-300 hover:bg-gray-700"
+    }`}
+        >
+          {tradeMode ? "Trade" : "Trade"}
+        </button>
+
         <ThemeIcon />
       </div>
+
     </div>
   );
 };

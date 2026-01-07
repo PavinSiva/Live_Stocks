@@ -28,14 +28,14 @@ export default function StockCard({
   const isPositive = safeChange > 0;
 
   return (
-    <div className="financial-card interactive-hover cursor-pointer border-2 border-gray-800 bg-gray-950 p-4 rounded-xl" >
+    <div className="financial-card interactive-hover cursor-pointer border-2 border-zinc-800  p-4 rounded-xl" >
       <div className="flex items-start justify-between mb-4 ">
         <div className="flex-1 ">
-          <div className="flex items-center gap-2 mb-2 ">
+          <div className="flex items-center gap-2 mb-1 ">
             <h3 className="font-bold text-white text-lg">{symbol || "N/A"}</h3>
             {isPositive ? <TrendingUp className="h-4 w-4 text-green-500" /> : <TrendingDown className="h-4 w-4 text-red-500" />}
           </div>
-          <p className="text-sm text-gray-400 font-semibold text-muted-foreground line-clamp-1">{name || "Unknown Company"}</p>
+          {/* <p className="text-sm text-gray-400 font-semibold text-muted-foreground line-clamp-1">{name || "Unknown Company"}</p> */}
         </div>
 
         <div className="text-right">
@@ -54,7 +54,7 @@ export default function StockCard({
 
        {history.length > 0 && (
   <div
-    className="mt-4 h-30 w-full rounded  bg-gray-950   p-2 cursor-pointer"
+    className="mt-4 h-30 w-full rounded  bg-black   p-2 cursor-pointer"
     onClick={onClick}
   >
     <LineChart
@@ -67,24 +67,24 @@ export default function StockCard({
   </div>
 )}
 
-      <div className="flex items-center justify-between pt-4 border-t border-t-gray-700 border-border">
+      {/* <div className="flex items-center justify-between pt-4 border-t border-t-gray-700 border-border">
         <div className="flex items-center gap-2">
           <Volume2 className="h-4 w-4 text-muted-foreground text-gray-400" />
           <span className="text-sm text-muted-foreground text-gray-400">Volume</span>
         </div>
         <span className="financial-number text-sm font-medium text-white">{formatNumber(volume) || "N/A"}</span>
-      </div>
+      </div> */}
 
-      {marketCap && (
+      {/* {marketCap && (
         <div className="flex items-center justify-between mt-2">
           <span className="text-sm text-muted-foreground text-gray-400">Market Cap</span>
           <span className="financial-number text-sm font-medium text-white">{formatNumber(marketCap)}</span>
         </div>
-      )}
+      )} */}
 
-      <div className="mt-4 h-12 bg-gradient-subtle rounded border border-gray-800 bg-gray-900 flex items-center justify-center" onClick={onClick}>
+      {/* <div className="mt-4 h-8 bg-gradient-subtle rounded border border-gray-800 bg-gray-900 flex items-center justify-center" onClick={onClick}>
         <span className="text-xs text-muted-foreground text-white">Chart</span>
-      </div>
+      </div> */}
     </div>
   );
 }

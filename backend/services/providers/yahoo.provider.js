@@ -21,7 +21,10 @@ export const searchYahooStocks = async (query) => {
 export const fetchYahooStockDetails = async (symbol) => {
   if (!symbol) throw new Error("Symbol is required");
 
-  const data = await yahooFinance.quoteSummary(symbol, { modules: ["price", "summaryProfile"] });
+  const data = await yahooFinance.quoteSummary(symbol, {
+    modules: ["price", "summaryProfile"],
+  });
+
   const result = data?.price;
   const profile = data?.summaryProfile;
 
@@ -34,14 +37,16 @@ export const fetchYahooStockDetails = async (symbol) => {
     marketCap: result.marketCap || 0,
     country: profile?.country || "N/A",
     industry: profile?.industry || "N/A",
-    sector: profile?.sector || "N/A",  
+    sector: profile?.sector || "N/A",
   };
 };
 
-// 💹 Get latest stock quote
+// 💲 Live quote
 export const fetchYahooQuote = async (symbol) => {
   if (!symbol) throw new Error("Symbol is required");
+
   const quote = await yahooFinance.quote(symbol);
+
   if (!quote) throw new Error("No quote found");
 
   return {
@@ -53,17 +58,14 @@ export const fetchYahooQuote = async (symbol) => {
   };
 };
 
-
-
-
+// 📈 Candles (CHART API ONLY — historical REMOVED)
 export const fetchYahooCandles = async (symbol, filter) => {
   if (!symbol || !filter) throw new Error("Symbol and filter are required");
 
   const now = Math.floor(Date.now() / 1000);
-  let period1, interval, useChart = false;
+  let period1, interval;
 
   switch (filter) {
-
     case "1M":
       interval = "1d";
       period1 = now - 30 * 24 * 60 * 60;
@@ -93,28 +95,54 @@ export const fetchYahooCandles = async (symbol, filter) => {
       throw new Error("Invalid filter");
   }
 
-  let result;
+  const chartData = await yahooFinance.chart(symbol, {
+    period1,
+    period2: now,
+    interval,
+  });
 
-  if (useChart) {
-
-    const chartData = await yahooFinance.chart(symbol, {
-      period1,
-      period2: now,
-      interval,
-    });
-    result = chartData?.timestamp?.map((t, i) => ({
-      time: t,
-      open: chartData.indicators.quote[0].open[i],
-      high: chartData.indicators.quote[0].high[i],
-      low: chartData.indicators.quote[0].low[i],
-      close: chartData.indicators.quote[0].close[i],
-      volume: chartData.indicators.quote[0].volume[i],
-    }));
-  } else {
-    result = await yahooFinance.historical(symbol, { period1, period2: now, interval });
+  if (!chartData?.timestamp?.length) {
+    throw new Error("No candles found");
   }
 
-  if (!result || result.length === 0) throw new Error("No candles found");
+  return chartData.timestamp.map((t, i) => ({
+    time: t,
+    open: chartData.indicators.quote[0].open[i],
+    high: chartData.indicators.quote[0].high[i],
+    low: chartData.indicators.quote[0].low[i],
+    close: chartData.indicators.quote[0].close[i],
+    volume: chartData.indicators.quote[0].volume[i],
+  }));
+};
 
-  return result;
+// 📰 Market news
+export const fetchMarketNews = async () => {
+  const queries = [
+    "stock market",
+    "NASDAQ",
+    "S&P 500",
+    "US economy",
+    "Federal Reserve",
+  ];
+
+  const results = await Promise.all(
+    queries.map((q) => yahooFinance.search(q))
+  );
+
+  const news = results.flatMap((r) => r.news || []);
+
+  const uniqueNews = Object.values(
+    news.reduce((acc, item) => {
+      acc[item.uuid] = item;
+      return acc;
+    }, {})
+  );
+
+  uniqueNews.sort(
+    (a, b) =>
+      new Date(b.providerPublishTime) -
+      new Date(a.providerPublishTime)
+  );
+
+  return uniqueNews.slice(0, 30);
 };

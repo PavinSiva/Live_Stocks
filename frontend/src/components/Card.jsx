@@ -4,7 +4,7 @@
   const Card = ({ children }) => {
     const {darkMode} =useContext(ThemeContext)
     return (
-      <div className={`w-full h-full rounded-md relative p-2 border-2  ${darkMode ? "bg-gray-950 border-gray-800" : "bg-white border-neutral-200"}`}>
+      <div className={`w-full h-full rounded-md relative p-2 border-2  ${darkMode ? "bg-black border-gray-800" : "bg-white border-neutral-200"}`}>
         {children}
       </div>
     )

@@ -8,6 +8,9 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import  Home  from "./components/Home";
 import Stocks from "./components/Stocks";
+import Commodities from "./components/Commodities";
+import Cryptocurrency from "./components/CryptoCurrency";
+import News from "./components/News"
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -24,7 +27,9 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/stocks" element={<Stocks />} />
-
+            <Route path="/commodities" element={<Commodities />} />
+            <Route path="/cryptocurrency" element={<Cryptocurrency />} />
+            <Route path="/news" element={<News />} />
           </Routes>
         </Router>
       </StockContext.Provider>

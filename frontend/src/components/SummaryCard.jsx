@@ -28,7 +28,7 @@ export default function SummaryCard ({
 
   return (
     <div
-      className="financial-card interactive-hover cursor-pointer border-2 border-gray-800 bg-gray-950 p-4 rounded-2xl transition-shadow duration-300"
+      className="financial-card interactive-hover cursor-pointer border-2 border-gray-800 bg-black p-4 rounded-2xl transition-shadow duration-300"
       onClick={onClick}
     >
 

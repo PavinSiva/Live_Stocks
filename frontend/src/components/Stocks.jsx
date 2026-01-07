@@ -11,7 +11,7 @@ export default function Stocks() {
   const [loading, setLoading] = useState(true);
   const { setStockSymbol } = useContext(StockContext);
 
-  
+
   const symbols = [
     "AAPL", "MSFT", "AMZN", "GOOGL", "FB", "TSLA", "NVDA", "JPM",
     "V", "PG", "JNJ", "DIS", "NFLX", "ADBE", "INTC", "KO",
@@ -22,6 +22,7 @@ export default function Stocks() {
     const fetchStocks = async () => {
       try {
         const data = await getStocksData(symbols);
+        console.log("Fetched stocks data:", data);
         setStocks(data);
       } catch (err) {
         console.error("Failed to fetch stocks:", err);
@@ -31,15 +32,16 @@ export default function Stocks() {
     };
 
     fetchStocks();
+
   }, []);
 
-  const handleCardClick = async(symbol) => {
+  const handleCardClick = async (symbol) => {
     await setStockSymbol(symbol);
     navigate("/dashboard");
   }
 
   return (
-    <div className="min-h-screen flex w-full bg-gray-950">
+    <div className="min-h-screen flex w-full bg-black">
       <AppSidebar />
 
       <main className="flex-1 flex flex-col overflow-hidden">
@@ -56,8 +58,8 @@ export default function Stocks() {
           </div>
         </header>
 
-        
-        <div className="space-y-6 p-6">
+
+        <div className="space-y-6 p-6 ">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-white">
@@ -76,22 +78,24 @@ export default function Stocks() {
             </div>
           </div>
 
-          
+
           {loading ? (
-            <p className="text-white mt-6">Loading stocks...</p>
+            <div className="flex flex-col justify-center items-center mt-6">
+              <div className="w-6 h-6 border-2 border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+              <p className="text-white text-sm mt-2">Loading...</p>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
               {stocks.map((stock) => (
                 <StockCard
                   key={stock.symbol}
                   symbol={stock.symbol || "N/A"}
-                  name={stock.name || "Unknown"}
+                  name={stock.name || stock.shortName || stock.longName || "Unknown"}
                   price={stock.price || 0}
                   change={stock.change || 0}
                   changePercent={stock.changePercent || 0}
                   volume={stock.volume || 0}
-                  marketCap={stock.marketCap || 0}
-                  history={stock.history || []} 
+                  history={stock.history || []}
                   onClick={() => handleCardClick(stock.symbol)}
                 />
               ))}

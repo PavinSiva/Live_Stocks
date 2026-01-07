@@ -25,22 +25,22 @@ export default function Home() {
     fetchData();
   }, []);
 
-  
+
   const topGainers = marketData?.topGainers || [];
   const topLosers = marketData?.topLosers || [];
   const totalMarketCap = marketData?.totalMarketCap || 0;
   const totalVolume = marketData?.totalVolume || 0;
 
   return (
-    <div className="min-h-screen flex w-full bg-gray-950">
+    <div className="min-h-screen flex w-full bg-black">
       <AppSidebar />
 
       <main className="flex-1 flex flex-col overflow-hidden">
-        
-        <header className="h-16 border-b border-gray-800 bg-black shadow-sm">
+
+        <header className="h-16 border-b border-gray-800 dark:bg-zinc-900 shadow-sm">
           <div className="flex h-full items-center justify-between px-6">
             <h1 className="text-xl font-semibold text-white">
-              Financial Dashboard
+              Paper Trading Simulator
             </h1>
             <div className="flex items-center gap-2 text-sm">
               <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
@@ -49,7 +49,7 @@ export default function Home() {
           </div>
         </header>
 
-        
+
         <div className="flex-1 overflow-auto p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -70,7 +70,7 @@ export default function Home() {
             </div>
           </div>
 
-          
+
           {loading ? (
             <p className="text-center mt-10 text-white font-semibold text-lg">
               Loading market data...
@@ -78,57 +78,57 @@ export default function Home() {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4 mt-6">
-               <SummaryCard
-  symbol="Market Cap"
-  name="Global Markets"
-  price={totalMarketCap}
-  change={0}
-  changePercent={0}
-  volume={0}
-/>
+                <SummaryCard
+                  symbol="Market Cap"
+                  name="Global Markets"
+                  price={totalMarketCap}
+                  change={0}
+                  changePercent={0}
+                  volume={0}
+                />
 
-                
-<SummaryCard
-  symbol="Total Volume"
-  name="24h Volume"
-  price={totalVolume}
-  change={0}
-  changePercent={0}
-  volume={0}
-/>
+
+                <SummaryCard
+                  symbol="Total Volume"
+                  name="24h Volume"
+                  price={totalVolume}
+                  change={0}
+                  changePercent={0}
+                  volume={0}
+                />
 
                 {topGainers.length > 0 && (
-  <SummaryCard
-    symbol={topGainers[0].symbol}
-    name={topGainers[0].name}
-    price={topGainers[0].price}
-    change={topGainers[0].change}
-    changePercent={topGainers[0].percentChange}
-    volume={topGainers[0].volume}
-    marketCap={topGainers[0].marketCap}
-    history={topGainers.map((g, i) => ({ time: i, close: g.price }))}
-  />
-)}
+                  <SummaryCard
+                    symbol={topGainers[0].symbol}
+                    name={topGainers[0].name}
+                    price={topGainers[0].price}
+                    change={topGainers[0].change}
+                    changePercent={topGainers[0].percentChange}
+                    volume={topGainers[0].volume}
+                    marketCap={topGainers[0].marketCap}
+                    history={topGainers.map((g, i) => ({ time: i, close: g.price }))}
+                  />
+                )}
 
-                
-{topLosers.length > 0 && (
-  <SummaryCard
-    symbol={topLosers[0].symbol}
-    name={topLosers[0].name}
-    price={topLosers[0].price}
-    change={topLosers[0].change}
-    changePercent={topLosers[0].percentChange}
-    volume={topLosers[0].volume}
-    marketCap={topLosers[0].marketCap}
-    history={topLosers.map((l, i) => ({ time: i, close: l.price }))}
-  />
-)}
+
+                {topLosers.length > 0 && (
+                  <SummaryCard
+                    symbol={topLosers[0].symbol}
+                    name={topLosers[0].name}
+                    price={topLosers[0].price}
+                    change={topLosers[0].change}
+                    changePercent={topLosers[0].percentChange}
+                    volume={topLosers[0].volume}
+                    marketCap={topLosers[0].marketCap}
+                    history={topLosers.map((l, i) => ({ time: i, close: l.price }))}
+                  />
+                )}
               </div>
 
 
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 p-4 mt-6">
-                
-                <div className="lg:col-span-1 space-y-4 animate-slide-up border-2 border-gray-900 bg-gray-950 p-4 rounded-2xl">
+
+                <div className="lg:col-span-1 space-y-4 animate-slide-up border-2 border-gray-900 bg-black p-4 rounded-2xl">
                   <h2 className="flex justify-center text-xl font-semibold text-white">
                     Top Gainers
                   </h2>
@@ -149,8 +149,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                
-                <div className="lg:col-span-1 space-y-4 animate-slide-up border-2 border-gray-900 bg-gray-950 p-4 rounded-2xl">
+
+                <div className="lg:col-span-1 space-y-4 animate-slide-up border-2 border-gray-900 bg-black p-4 rounded-2xl">
                   <h2 className="flex justify-center text-xl font-semibold text-white">
                     Top Losers
                   </h2>
